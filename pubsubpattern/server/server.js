@@ -77,6 +77,7 @@ async function processNewConnection(socket, req){
     socket.sessionParams = params;
     socket.ip = req.socket.remoteAddress;
     socket.sessionParams.headers = req.headers;
+    
     try {
         await verifyClientConnections(params.type, socket);
     }    

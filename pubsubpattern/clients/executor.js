@@ -23,7 +23,7 @@ var inter;
         }
     };
     
-    let client = new ws("ws://foul-cord-plain.glitch.me/?type=executor",options);
+    let client = new ws("ws://54.167.122.51:3000/?type=executor",options);
     //let client = new ws("ws://services.itrmachines.com:5551/?type=executor",options);
     var dataSendInterval = {
         tick: null,
@@ -78,7 +78,7 @@ var inter;
             let p = {bid:Math.random()*3700, bidSize:Math.random()*500000, ask:Math.random()*3700, askSize: Math.random()*500000};
             console.log("Sending ticks", p)
             client.send(JSON.stringify({request:'publish', channel:'client', action:'newTick', payload: p}));
-        }, 5000);
+        }, 1000);
     }
 
     function enableBookSubscription(){

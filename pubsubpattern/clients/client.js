@@ -1,6 +1,7 @@
 const ws = require('ws');
+const fs = require("fs");
 var inter;
-
+const fileName = `log_${Date.now()}.txt`;
 (async function(){
     
     let token ="testtoken";
@@ -23,14 +24,14 @@ var inter;
         }
     };
     
-    let client = new ws("ws://localhost:3000/?type=client",options);
+    let client = new ws("ws://54.167.122.51:3000/?type=watcher",options);
     //let client = new ws("ws://services.itrmachines.com:5551/?type=client",options);
     //let client = new ws("ws://192.168.35.22:3000/?type=client",options);
         
     client.on("open",()=>{
         console.log("open on client");
         
-        client.send(createMessageForChannel({request: "subscribe", channel:'client', payload: { symbol: "USDCOP", data_type: "ticks" }}));
+        //client.send(createMessageForChannel({request: "subscribe", channel:'client', payload: { symbol: "USDCOP", data_type: "ticks" }}));
         /* setInterval(()=>{
             console.log("sending unsub");
             client.send(createMessageForChannel({request:'publish', channel:'executor', action: "unsubscribe", payload: { symbol: "USDCOP", data_type: "ticks" }}));
@@ -86,8 +87,14 @@ var inter;
     });
 
     client.on('message', (msg)=>{
-        const{action, payload } = JSON.parse(msg)
-        if(action == 'newTick')  console.log("Client: got new payload", payload);
+        // const{action, payload } = JSON.parse(msg)
+        // if(action == 'newTick')  console.log("Client: got new payload", payload);
+        obj = JSON.parse(msg);
+        console.log(obj);
+
+        fs.appendFile(fileName,msg+'\n' , function (err) {
+            if (err) throw err;
+          });
     });
 
     
