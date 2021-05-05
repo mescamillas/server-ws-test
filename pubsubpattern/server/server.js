@@ -28,7 +28,7 @@ function getServer(app){
 
 function createHttpServer(app, port){
     return http.createServer(app)
-    .listen(port, '0.0.0.0' , ()=>{
+    .listen(port, ()=>{
         const p = mainServer.address();
         console.log('admin listening on port', p);
     });
