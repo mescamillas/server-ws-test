@@ -23,7 +23,7 @@ var inter;
         }
     };
     
-    let client = new ws("ws://fast-garden-04689.herokuapp.com:5871/?type=executor",options);
+    let client = new ws("ws://localhost:8080/?type=executor",options);
     //let client = new ws("ws://services.itrmachines.com:5551/?type=executor",options);
     var dataSendInterval = {
         tick: null,
