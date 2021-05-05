@@ -91,10 +91,10 @@ const fileName = `log_${Date.now()}.txt`;
         // if(action == 'newTick')  console.log("Client: got new payload", payload);
         obj = JSON.parse(msg);
         console.log(obj);
-
-        fs.appendFile(fileName,msg+'\n' , function (err) {
-            if (err) throw err;
-          });
+        if(obj.event !=="channel:client publish")
+            fs.appendFile(fileName,msg+'\n' , function (err) {
+                if (err) throw err;
+            });
     });
 
     

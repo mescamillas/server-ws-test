@@ -59,7 +59,7 @@ async function startServer(){
     wsServer.on('connection', async (wsClient, req)=>{
         const ip = req.socket.remoteAddress;
         console.log("new connection from:", ip);
-        informNewConnection(ip);
+        pubSubManager.informNewConnection(ip, req.headers);
         processNewConnection(wsClient, req);
         setRulesForMessages(wsClient);
         wsClient.on('close',(code)=>{
@@ -68,16 +68,13 @@ async function startServer(){
     });
 }
 
-function informNewConnection(ip){
-    pubSubManager.informNewConnection(ip);
-}
 
 async function processNewConnection(socket, req){
     let params = obtainConnectionParameters(req);
     socket.sessionParams = params;
     socket.ip = req.socket.remoteAddress;
     socket.sessionParams.headers = req.headers;
-    
+
     try {
         await verifyClientConnections(params.type, socket);
     }    

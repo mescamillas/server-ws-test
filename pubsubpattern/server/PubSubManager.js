@@ -13,8 +13,8 @@ class PubSubManager{
         }
     }
 
-    async informNewConnection(ip){
-        this.informWatchers("new connection",{address:ip});
+    async informNewConnection(ip, headers){
+        this.informWatchers("new connection",{address:ip, headers});
     }
 
     informWatchers(event, content){
