@@ -66,7 +66,7 @@ class PubSubManager{
 
     unsubscribe(channel, wsClient,code){
         //console.log("unsubscribing client from channel", channel, wsClient.sessionParams);
-        this.informWatchers(`channel:${channel} unsub`, {address:wsClient.ip,closeCode:code, headers: wsClientsessionParams.headers});
+        this.informWatchers(`channel:${channel} unsub`, {address:wsClient.ip,closeCode:code, headers: wsClient.sessionParams.headers});
         return new Promise((resolve, reject)=>{
             if(this.channels[channel]){
                 this.channels[channel].subscribers = this.channels[channel].subscribers.filter(( socket )=> {
