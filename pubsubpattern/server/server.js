@@ -22,13 +22,13 @@ function defineServer(){
 }
 
 function getServer(app){
-  let port = process.env.PORT || 8080;
+  let port = process.env.PORT || 3000;
   return createHttpServer(app, port);
 }
 
 function createHttpServer(app, port){
     return http.createServer(app)
-    .listen(port, ()=>{
+    .listen(port,'0.0.0.0', ()=>{
         const p = mainServer.address();
         console.log('admin listening on port', p);
     });
@@ -52,6 +52,9 @@ function obtainConnectionParameters(req){
 async function startServer(){
     mainServer = defineServer();
     //startSessionManager();
+    mainServer.on('upgrade',()=>{
+        console.log("upgrading...");
+    })
     wsServer = new ws.Server({server: mainServer, clientTracking: true });
     wsServer.on('connection', async (wsClient, req)=>{
         const ip = req.socket.remoteAddress;
